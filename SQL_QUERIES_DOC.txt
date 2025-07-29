@@ -1,0 +1,58 @@
+CREATE TABLE Departments (
+    DepartmentId SERIAL PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE Locations (
+    LocationId SERIAL PRIMARY KEY,
+    Title VARCHAR(255),
+    City VARCHAR(100),
+    State VARCHAR(100),
+    Country VARCHAR(100),
+    Zip VARCHAR(20)
+);
+
+CREATE TABLE Jobs (
+    JobId SERIAL PRIMARY KEY,
+    Title VARCHAR(255),
+    Description TEXT,
+    LocationId INT REFERENCES Locations(LocationId),
+    DepartmentId INT REFERENCES Departments(DepartmentId),
+    ClosingDate TIMESTAMP,
+    PostedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO Departments (Title) VALUES
+('Software Development'),
+('Project Management');
+
+
+INSERT INTO Locations (Title, City, State, Country, Zip) VALUES
+('India Office', 'Verna', 'GA', 'India', '403802'),
+('US Office', 'New York', 'NY', 'United States', '10001');
+
+
+APIs
+[POST]
+https://localhost:7018/api/v1/jobs
+{
+  "title": "Full Stack Developer",
+  "description": "Looking for a developer skilled in React and .NET.",
+  "departmentid": 1,
+  "locationid": 1,
+  "closingdate": "2025-08-31"
+}
+
+[PUT]
+https://localhost:7018/api/v1/jobs/1
+
+[GET]
+https://localhost:7018/api/v1/jobs/1
+
+
+
+List API
+https://localhost:7018/api/jobs/list
+ 
